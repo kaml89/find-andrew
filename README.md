@@ -1,4 +1,4 @@
-To install required dependencies in create virtual environment in project directory and run: 
+To install required dependencies create virtual environment in project directory and run: 
 
 pip install -r requirements.txt
 

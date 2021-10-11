@@ -4,11 +4,10 @@ import pytesseract
 import argparse
 import cv2
 
-
-
 def decode_predictions(scores, geometry):
 
-	"""Returns tuple containing the bounding box locations of the text (rects)
+	"""
+	Returns tuple containing the bounding box locations of the text (rects)
 	 and the probability of that box containing text (confidences)
 
     Arguments:

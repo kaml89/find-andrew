@@ -4,6 +4,21 @@ import pytesseract
 import argparse
 import cv2
 
+
+def preprocess_image(img):
+	"""
+	Method takes image and performs series of processing operations
+	Returns new modified image
+	"""
+
+	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	inverted = cv2.bitwise_not(gray)
+	# blurred = cv2.GaussianBlur(inverted, (7, 7), 0)
+	# thresh = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+	cv2.imshow("Invert1",inverted)
+	return inverted
+	
+
 def decode_predictions(scores, geometry):
 
 	"""
@@ -18,7 +33,7 @@ def decode_predictions(scores, geometry):
 	(numRows, numCols) = scores.shape[2:4]
 	rects = []
 	confidences = []
-	# loop over the number of rows
+
 	for y in range(0, numRows):
 		# extract the scores (probabilities) and geometrical data
 		# of boxes that may contain text
@@ -128,7 +143,9 @@ for (startX, startY, endX, endY) in boxes:
 	
 	roi = orig[startY:endY, startX:endX]
 	config = ("-l pol --oem 3 --psm 7")
-	text = pytesseract.image_to_string(roi, config=config)
+
+	img = preprocess_image(roi)
+	text = pytesseract.image_to_string(img, config=config)
 
 	results.append(((startX, startY, endX, endY), text))
 
